@@ -9,10 +9,11 @@ import org.springframework.ai.vectorstore.VectorStore;
 import java.util.Map;
 
 public class ModeledQuestionAnswerAdvisor extends QuestionAnswerAdvisor {
-	private static final String TRANSLATE = "Generate 1 different versions of a provided user query. " +
-		"but they should all retain the original meaning. " +
-		"It will be used to retrieve relevant documents and it should be in English \n" +
-		"Without enumerations, hyphens, or any additional formatting!";
+
+	private static final String TRANSLATE = "Generate 1 different versions of a provided user query. "
+			+ "but they should all retain the original meaning. "
+			+ "It will be used to retrieve relevant documents and it should be in English \n"
+			+ "Without enumerations, hyphens, or any additional formatting!";
 
 	private ChatModel chatModel;
 
@@ -26,7 +27,8 @@ public class ModeledQuestionAnswerAdvisor extends QuestionAnswerAdvisor {
 		this.chatModel = chatModel;
 	}
 
-	public ModeledQuestionAnswerAdvisor(VectorStore vectorStore, SearchRequest searchRequest, String userTextAdvise, ChatModel chatModel) {
+	public ModeledQuestionAnswerAdvisor(VectorStore vectorStore, SearchRequest searchRequest, String userTextAdvise,
+			ChatModel chatModel) {
 		super(vectorStore, searchRequest, userTextAdvise);
 		this.chatModel = chatModel;
 	}
@@ -39,4 +41,5 @@ public class ModeledQuestionAnswerAdvisor extends QuestionAnswerAdvisor {
 		request = super.adviseRequest(processedRequest, context);
 		return AdvisedRequest.from(request).withUserText(originalUserText).build();
 	}
+
 }

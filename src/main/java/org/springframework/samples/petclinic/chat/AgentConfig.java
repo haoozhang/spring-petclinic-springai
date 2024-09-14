@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.chat;
 
-
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientCustomizer;
 import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
@@ -21,7 +20,6 @@ import org.springframework.core.io.Resource;
 
 import java.util.List;
 
-
 @Configuration
 public class AgentConfig {
 
@@ -33,7 +31,8 @@ public class AgentConfig {
 	@Bean
 	public ChatClientCustomizer chatClientCustomizer(VectorStore vectorStore, ChatModel model) {
 		ChatMemory chatMemory = new InMemoryChatMemory();
-		return b -> b.defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory), new ModeledQuestionAnswerAdvisor(vectorStore, SearchRequest.defaults(), model));
+		return b -> b.defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory),
+				new ModeledQuestionAnswerAdvisor(vectorStore, SearchRequest.defaults(), model));
 	}
 
 	@Bean
