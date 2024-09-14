@@ -30,9 +30,6 @@ import org.springframework.samples.petclinic.owner.OwnerRepository;
 import java.util.List;
 import java.util.function.Function;
 
-/**
- * @author Zhiyong Li
- */
 @Configuration
 public class OwnerTools {
 

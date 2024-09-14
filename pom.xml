@@ -25,15 +25,6 @@
     <webjars-bootstrap.version>5.3.3</webjars-bootstrap.version>
     <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
 
-    <checkstyle.version>10.16.0</checkstyle.version>
-    <jacoco.version>0.8.12</jacoco.version>
-    <libsass.version>0.3.1</libsass.version>
-    <lifecycle-mapping>1.0.0</lifecycle-mapping>
-    <maven-checkstyle.version>3.3.1</maven-checkstyle.version>
-    <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
-    <spring-format.version>0.0.41</spring-format.version>
-    <langchain4j.version>0.30.0</langchain4j.version>
-
   </properties>
 
   <dependencyManagement>
@@ -49,6 +40,7 @@
   </dependencyManagement>
 
   <dependencies>
+
     <!-- Spring and Spring Boot dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -123,32 +115,7 @@
       <version>${webjars-font-awesome.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-docker-compose</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mysql</artifactId>
-      <scope>test</scope>
-    </dependency>
-
+    <!-- Third Party Dependencies -->
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
@@ -166,24 +133,6 @@
 
   </dependencies>
 
-  <repositories>
-    <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-  </repositories>
   <build>
     <plugins>
       <plugin>
@@ -209,128 +158,5 @@
       </plugin>
     </plugins>
   </build>
-
-
-  <profiles>
-    <profile>
-      <id>css</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>unpack</id>
-                <?m2e execute onConfiguration,onIncremental?>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>unpack</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>org.webjars.npm</groupId>
-                      <artifactId>bootstrap</artifactId>
-                      <version>${webjars-bootstrap.version}</version>
-                    </artifactItem>
-                  </artifactItems>
-                  <outputDirectory>${project.build.directory}/webjars</outputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>com.gitlab.haynes</groupId>
-            <artifactId>libsass-maven-plugin</artifactId>
-            <version>${libsass.version}</version>
-            <executions>
-              <execution>
-                <phase>generate-resources</phase>
-                <?m2e execute onConfiguration,onIncremental?>
-                <goals>
-                  <goal>compile</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <inputPath>${basedir}/src/main/scss/</inputPath>
-              <outputPath>${basedir}/src/main/resources/static/resources/css/</outputPath>
-              <includePath>
-                ${project.build.directory}/webjars/META-INF/resources/webjars/bootstrap/${webjars-bootstrap.version}/scss/
-              </includePath>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>m2e</id>
-      <activation>
-        <property>
-          <name>m2e.version</name>
-        </property>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <!-- This plugin's configuration is used to store Eclipse m2e settings
-              only. It has no influence on the Maven build itself. -->
-            <plugin>
-              <groupId>org.eclipse.m2e</groupId>
-              <artifactId>lifecycle-mapping</artifactId>
-              <version>${lifecycle-mapping}</version>
-              <configuration>
-                <lifecycleMappingMetadata>
-                  <pluginExecutions>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <versionRange>[1,)</versionRange>
-                        <goals>
-                          <goal>check</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore/>
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <versionRange>[1,)</versionRange>
-                        <goals>
-                          <goal>build-info</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore/>
-                      </action>
-                    </pluginExecution>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-                        <groupId>io.spring.javaformat</groupId>
-                        <artifactId>spring-javaformat-maven-plugin</artifactId>
-                        <versionRange>[0,)</versionRange>
-                        <goals>
-                          <goal>validate</goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore/>
-                      </action>
-                    </pluginExecution>
-                  </pluginExecutions>
-                </lifecycleMappingMetadata>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-  </profiles>
 
 </project>

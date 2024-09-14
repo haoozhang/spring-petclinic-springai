@@ -32,13 +32,18 @@ public class Agent {
 	@Value("classpath:/prompts/system-message.st")
 	private Resource systemResource;
 
+	/**
+	 * orchestrates the chat interaction
+	 * @param userMessage: the message that the user sends.
+	 * @param username: used for keeping track of conversations.
+	 */
 	public String chat(String userMessage, String username) {
-
 		try {
-
+			// customize chat behavior by associating the conversation with username
 			Consumer<ChatClient.AdvisorSpec> advisorSpecConsumer = advisorSpec -> {
 				advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, username);
 			};
+			// generate structured prompts based on system messages or templates
 			PromptTemplate systemPromptTemplate = new SystemPromptTemplate(systemResource);
 			Map<String, Object> systemParameters = new HashMap<>() {
 				{
@@ -47,7 +52,7 @@ public class Agent {
 			};
 
 			return chatClient.prompt()
-				// userName as memory key
+				// username as memory key
 				.advisors(advisorSpecConsumer)
 				.system(systemPromptTemplate.render(systemParameters))
 				.user(userMessage)

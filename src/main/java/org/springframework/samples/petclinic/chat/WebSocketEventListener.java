@@ -19,6 +19,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @RequiredArgsConstructor
 public class WebSocketEventListener {
 
+	// provided by Spring that facilitates sending messages to specific destinations in a WebSocket application
 	private final SimpMessageSendingOperations messagingTemplate;
 
 	@EventListener
