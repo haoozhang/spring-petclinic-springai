@@ -19,6 +19,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	 */
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
+		// client connects to the WebSocket server via the /websocket endpoint.
 		registry.addEndpoint("/websocket").withSockJS();
 	}
 
@@ -28,7 +29,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	 */
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
+		// server processes the message and send updates to all clients subscribed to /topic.
 		registry.enableSimpleBroker("/topic");
+		// clients send messages prefixed with /app to the server
 		registry.setApplicationDestinationPrefixes("/app");
 	}
 

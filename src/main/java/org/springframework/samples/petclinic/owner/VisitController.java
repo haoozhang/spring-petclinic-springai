@@ -1,18 +1,3 @@
-/*
- * Copyright 2012-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.samples.petclinic.owner;
 
 import jakarta.validation.Valid;
@@ -24,13 +9,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
 
-/**
- * @author Juergen Hoeller
- * @author Ken Krebs
- * @author Arjen Poutsma
- * @author Michael Isvy
- * @author Dave Syer
- */
 @Controller
 class VisitController {
 
@@ -49,13 +27,12 @@ class VisitController {
 	 * Called before each and every @RequestMapping annotated method. 2 goals: - Make sure
 	 * we always have fresh data - Since we do not use the session scope, make sure that
 	 * Pet object always has an id (Even though id is not part of the form fields)
-	 *
 	 * @param petId
 	 * @return Pet
 	 */
 	@ModelAttribute("visit")
 	public Visit loadPetWithVisit(@PathVariable("ownerId") int ownerId, @PathVariable("petId") int petId,
-								  Map<String, Object> model) {
+			Map<String, Object> model) {
 		Owner owner = this.owners.findById(ownerId);
 
 		Pet pet = owner.getPet(petId);
@@ -78,7 +55,7 @@ class VisitController {
 	// called
 	@PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
 	public String processNewVisitForm(@ModelAttribute Owner owner, @PathVariable int petId, @Valid Visit visit,
-									  BindingResult result, RedirectAttributes redirectAttributes) {
+			BindingResult result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			return "pets/createOrUpdateVisitForm";
 		}
