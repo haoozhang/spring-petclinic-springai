@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.chat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
@@ -17,6 +19,8 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 
 @Component
 public class Agent {
+
+	private Logger logger = LoggerFactory.getLogger(Agent.class);
 
 	private static final String TRANSLATE = "Generate 1 different versions of a provided user query. "
 			+ "but they should all retain the original meaning. "
@@ -61,6 +65,7 @@ public class Agent {
 				.content();
 		}
 		catch (Exception e) {
+			logger.error("Exception thrown: " + e);
 			return "Sorry, I am not able to help you with that.";
 		}
 	}
